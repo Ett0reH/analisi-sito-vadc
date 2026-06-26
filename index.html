@@ -287,7 +287,7 @@
                 </div>
                 <div class="tile">
                     <h3>Spagna (Convivialità)</h3>
-                    <p style="font-size:13.5px; line-height:1.5;">L'intento di ricerca spagnolo ruota attorno ai trend di socializzazione diurni: <strong>Aperitivo, Cócteles, Spritz</strong>. È necessario posizionare l'Amaro del Capo como un modulatore ideale e rinfrescante per twist su drink classici.</p>
+                    <p style="font-size:13.5px; line-height:1.5;">L'intento di ricerca spagnolo ruota attorno ai trend di socializzazione diurni: <strong>Aperitivo, Cócteles, Spritz</strong>. È necessario posizionare l'Amaro del Capo come un modulatore ideale e rinfrescante per twist su drink classici.</p>
                 </div>
                 <div class="tile">
                     <h3>Global EN (Education)</h3>
@@ -463,7 +463,7 @@
     };
 
     // =========================================================================
-    // 2. CONFIGURAZIONE API GEMINI (LLM) - INSERITA LA CHIAVE DELL'UTENTE
+    // 2. CONFIGURAZIONE API GEMINI (LLM) - AGGIORNATA
     // =========================================================================
     const GEMINI_API_KEY = "AQ.Ab8RN6KfzEPIf7ksI005vvpPnWyQiexsN4DVAY5AEOcOE87ZDA"; 
 
@@ -487,14 +487,14 @@
             if (!response.ok) { throw new Error(`Status: ${response.status}`); }
             gitHubMarkdownContent = await response.text();
             
-            if (GEMINI_API_KEY === "INSERISCI_QUI_LA_TUA_API_KEY_GEMINI" || GEMINI_API_KEY === "") {
+            if (!GEMINI_API_KEY || GEMINI_API_KEY === "INSERISCI_QUI_LA_TUA_API_KEY_GEMINI") {
                 statusEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="color: #fbbf24;"></i> Documento caricato. API Key mancante.`;
-                welcomeEl.innerHTML = `Ho caricato il documento da GitHub, ma per abilitare l'AI Generativa devi inserire la tua <strong>API Key di Gemini</strong> alla riga 212 del file <code>index.html</code>.`;
+                welcomeEl.innerHTML = `Ho caricato il documento da GitHub, ma l'API Key fornita non è valida.`;
                 return; 
             }
 
             statusEl.innerHTML = `<i class="fa-solid fa-circle" style="color: #a3e635;"></i> LLM Attivo - Contesto Sincronizzato`;
-            welcomeEl.innerText = `Ho analizzato l'intero documento Markdown da GitHub tramite Gemini LLM. \n\nSono in grado di comprendere l'intent delle tue domande, elaborare sintesi complesse (es. "quali sono i problemi tecnici") e ragionare sulle strategie. Chiedi pure!`;
+            welcomeEl.innerText = `Ho analizzato l'intero documento Markdown da GitHub tramite Gemini LLM.\n\nSono pronto a fornirti risposte, approfondimenti o sintesi in base al report. Come ti posso aiutare?`;
             
             inputEl.disabled = false;
             btnEl.disabled = false;
@@ -521,7 +521,6 @@
         appendMessage(query, 'user');
         inputEl.value = '';
         
-        // Aggiungi loader
         const loaderId = appendMessage('<i class="fa-solid fa-spinner fa-spin"></i> Analisi semantica in corso...', 'loading');
         inputEl.disabled = true;
 
@@ -531,7 +530,7 @@
             appendMessage(formatMarkdown(reply), 'system');
         } catch (error) {
             removeMessage(loaderId);
-            appendMessage(`Errore LLM: ${error.message}. Verifica la tua API Key o la connessione.`, 'system');
+            appendMessage(`Errore LLM: ${error.message}.`, 'system');
         } finally {
             inputEl.disabled = false;
             inputEl.focus();
@@ -564,11 +563,11 @@
     }
 
     // =========================================================================
-    // 3. MOTORE LLM GEMINI - CHIAMATA API DIRETTA
+    // 3. MOTORE LLM GEMINI - AGGIORNATO AL MODELLO CORRETTO (LATEST)
     // =========================================================================
     async function queryGeminiLLM(userQuery) {
-        // Nota: Il modello gemini-1.5-flash accetta URL in questo formato
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        // Modello fixato: gemini-1.5-flash-latest
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
         
         const systemPrompt = `Sei un Senior SEO Strategist e AI Assistant. Il tuo compito è rispondere alle domande dell'utente basandoti ESCLUSIVAMENTE sul report SEO fornito di seguito.
         Regole:
