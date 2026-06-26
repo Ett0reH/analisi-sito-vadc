@@ -24,10 +24,9 @@
             overflow: hidden;
         }
 
-        /* AREA PRESENTAZIONE (SINISTRA) - Flessibile ma contenuta */
         .main-content {
             flex: 1;
-            min-width: 0; /* Previene l'espansione infinita che spinge via la sidebar */
+            min-width: 0; 
             height: 100vh;
             overflow-y: auto;
             overflow-x: hidden;
@@ -67,55 +66,23 @@
 
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; margin: 0; z-index: 1; }
 
-        .slide-title {
-            font-size: 34px;
-            font-weight: 700;
-            color: #d4af37;
-            margin-bottom: 25px;
-            border-left: 4px solid #a3e635;
-            padding-left: 18px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
+        .slide-title { font-size: 34px; font-weight: 700; color: #d4af37; margin-bottom: 25px; border-left: 4px solid #a3e635; padding-left: 18px; text-transform: uppercase; letter-spacing: 2px; }
         p, li, td, th { font-size: 15px; line-height: 1.6; color: #cbd5e1; z-index: 1; }
         strong { color: #ffffff; font-weight: 600; }
 
-        .content-area {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 100%;
-            z-index: 1;
-        }
-
+        .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; z-index: 1; }
         .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; }
         .three-column { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         
-        .tile { 
-            background: rgba(15, 23, 42, 0.6); 
-            padding: 25px; 
-            border-radius: 12px; 
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
+        .tile { background: rgba(15, 23, 42, 0.6); padding: 25px; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.15); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
         .tile h3 { font-size: 22px; color: #a3e635; margin-bottom: 12px; font-family: 'Urbanist', sans-serif; font-weight: 600; }
 
         .table-layout table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .table-layout th { background: rgba(212, 175, 55, 0.08); color: #d4af37; text-align: left; padding: 12px 14px; border-bottom: 2px solid #d4af37; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
         .table-layout td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 14px; vertical-align: top; }
-
         .bullet-list { list-style: none; padding: 0; margin: 0; }
         .bullet-list li { margin-bottom: 10px; padding-left: 25px; position: relative; font-size: 14.5px; }
         .bullet-list li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: #a3e635; font-size: 14px; }
-
-        .timeline-layout { display: flex; justify-content: space-between; position: relative; margin-top: 20px; }
-        .timeline-line { position: absolute; top: 20px; left: 0; width: 100%; height: 2px; background: rgba(212, 175, 55, 0.2); z-index: 0; }
-        .timeline-item { flex: 1; text-align: center; position: relative; z-index: 1; padding: 0 12px; }
-        .timeline-dot { width: 40px; height: 40px; background: #020617; border: 3px solid #a3e635; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; }
-        .timeline-item h3 { font-size: 16px; color: #d4af37; margin-bottom: 5px; font-family: 'Urbanist', sans-serif; font-weight: 600; }
-        .timeline-item p { font-size: 12.5px; color: #94a3b8; }
 
         .chart-container { display: flex; justify-content: center; align-items: center; gap: 50px; }
         .doughnut-chart { width: 260px; height: 260px; border-radius: 50%; background: conic-gradient(#d4af37 0% 55%, #a3e635 55% 75%, #38bdf8 75% 90%, #f472b6 90% 100%); position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -125,10 +92,10 @@
         .number-box { padding: 25px; background: rgba(255,255,255,0.02); border-radius: 12px; border-bottom: 4px solid #a3e635; border: 1px solid rgba(255,255,255,0.05); }
         .big-number { font-size: 48px; font-weight: 700; color: #d4af37; display: block; margin-bottom: 5px; font-family: 'Playfair Display', serif; }
 
-        /* CO-PILOTA AI SIDEBAR (DESTRA) - Inamovibile */
+        /* AI SIDEBAR */
         .ai-sidebar {
             width: 440px;
-            min-width: 440px; /* Fondamentale: impedisce alla sidebar di sparire */
+            min-width: 440px; 
             background-color: #0b1224;
             border-left: 1px solid rgba(212, 175, 55, 0.15);
             display: flex;
@@ -149,17 +116,8 @@
         .ai-header h2 { font-size: 19px; margin: 0; color: #fff; font-weight: 700; }
         .ai-header p { font-size: 12px; margin: 3px 0 0 0; color: #94a3b8; }
 
-        .ai-status-bar {
-            padding: 6px 20px;
-            background: rgba(212, 175, 55, 0.05);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-            font-size: 11px;
-            color: #a3e635;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
+        .ai-status-bar { padding: 6px 20px; background: rgba(212, 175, 55, 0.05); border-bottom: 1px solid rgba(212, 175, 55, 0.1); font-size: 11px; color: #a3e635; display: flex; align-items: center; gap: 8px; }
+        
         .ai-chat-messages {
             flex-grow: 1;
             padding: 20px;
@@ -167,11 +125,17 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            scroll-behavior: smooth;
         }
 
-        .message { max-width: 88%; padding: 12px 16px; border-radius: 12px; font-size: 13.5px; line-height: 1.5; white-space: pre-line; }
+        /* Markdown Styles per le risposte dell'LLM */
+        .message { max-width: 90%; padding: 14px 18px; border-radius: 12px; font-size: 14px; line-height: 1.6; }
         .message.system { background-color: rgba(30, 41, 59, 0.4); color: #e2e8f0; align-self: flex-start; border-left: 3px solid #d4af37; }
+        .message.system strong { color: #a3e635; }
+        .message.system ul { margin-top: 5px; margin-bottom: 5px; padding-left: 20px; }
+        .message.system p { margin-top: 0; margin-bottom: 10px; font-size: 14px; }
         .message.user { background-color: #a3e635; color: #020617; font-weight: 600; align-self: flex-end; }
+        .message.loading { font-style: italic; color: #94a3b8; align-self: flex-start; }
 
         .ai-suggestions { padding: 10px 15px; display: flex; gap: 6px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.05); }
         .suggestion-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.2); color: #cbd5e1; padding: 5px 10px; border-radius: 15px; font-size: 11px; cursor: pointer; transition: all 0.2s; }
@@ -323,7 +287,7 @@
                 </div>
                 <div class="tile">
                     <h3>Spagna (Convivialità)</h3>
-                    <p style="font-size:13.5px; line-height:1.5;">L'intento di ricerca spagnolo ruota attorno ai trend di socializzazione diurni: <strong>Aperitivo, Cócteles, Spritz</strong>. È necessario posizionare l'Amaro del Capo come un modulatore ideale e rinfrescante per twist su drink classici.</p>
+                    <p style="font-size:13.5px; line-height:1.5;">L'intento di ricerca spagnolo ruota attorno ai trend di socializzazione diurni: <strong>Aperitivo, Cócteles, Spritz</strong>. È necessario posizionare l'Amaro del Capo como un modulatore ideale e rinfrescante per twist su drink classici.</p>
                 </div>
                 <div class="tile">
                     <h3>Global EN (Education)</h3>
@@ -458,39 +422,38 @@
 
 <div class="ai-sidebar">
     <div class="ai-header">
-        <i class="fa-solid fa-brain"></i>
+        <i class="fa-solid fa-microchip"></i>
         <div>
-            <h2>Strategic AI Co-Pilot</h2>
-            <p>Connesso direttamente alla Root di GitHub</p>
+            <h2>Gemini SEO Co-Pilot</h2>
+            <p>LLM Integrato con contesto documentale completo</p>
         </div>
     </div>
     
     <div class="ai-status-bar" id="aiStatus">
-        <i class="fa-solid fa-sync fa-spin"></i> Sto caricando la conoscenza...
+        <i class="fa-solid fa-sync fa-spin"></i> Inizializzazione LLM e lettura documento...
     </div>
     
     <div class="ai-chat-messages" id="chatMessages">
         <div class="message system" id="welcomeMessage">
-            Sto caricando la conoscenza strategica direttamente dal repository GitHub per allineare il modulo di risposta...
+            Sto caricando l'architettura logica e i contenuti dal repository...
         </div>
     </div>
 
     <div class="ai-suggestions">
-        <div class="suggestion-btn" onclick="sendSuggestion('Quali sono le 10 attività urgenti?')">Top 10 Attività</div>
-        <div class="suggestion-btn" onclick="sendSuggestion('Spiega il problema dell\'Age Gate')">Problema Age Gate</div>
-        <div class="suggestion-btn" onclick="sendSuggestion('Cosa dice il report su Jägermeister e Ramazzotti?')">Analisi Competitor</div>
-        <div class="suggestion-btn" onclick="sendSuggestion('Quali sono le raccomandazioni per il mercato tedesco?')">Focus Germania</div>
+        <div class="suggestion-btn" onclick="sendSuggestion('Quali sono i problemi tecnici esatti?')">Problemi Tecnici</div>
+        <div class="suggestion-btn" onclick="sendSuggestion('Sintetizza i punti deboli rispetto a Jägermeister')">Gap con Jägermeister</div>
+        <div class="suggestion-btn" onclick="sendSuggestion('Dimmi i 5 hub principali da creare')">Struttura Hub</div>
     </div>
 
     <div class="ai-input-area">
-        <input type="text" id="userInput" placeholder="Interroga l'AI sul report live da GitHub..." onkeypress="handleKeyPress(event)" disabled>
+        <input type="text" id="userInput" placeholder="Esplora il documento con l'LLM..." onkeypress="handleKeyPress(event)" disabled>
         <button onclick="sendMessage()" id="sendBtn" disabled>Invia</button>
     </div>
 </div>
 
 <script>
     // =========================================================================
-    // CONFIGURAZIONE REPOSITORY GITHUB
+    // 1. CONFIGURAZIONE GITHUB
     // =========================================================================
     const GITHUB_CONFIG = {
         username: "Ett0reH",
@@ -499,7 +462,13 @@
         branch: "main"
     };
 
+    // =========================================================================
+    // 2. CONFIGURAZIONE API GEMINI (LLM) - INSERITA LA CHIAVE DELL'UTENTE
+    // =========================================================================
+    const GEMINI_API_KEY = "AQ.Ab8RN6KfzEPIf7ksI005vvpPnWyQiexsN4DVAY5AEOcOE87ZDA"; 
+
     let gitHubMarkdownContent = ""; 
+    let chatHistory = [];
 
     window.addEventListener('DOMContentLoaded', () => {
         fetchMarkdownFromGitHub();
@@ -515,23 +484,23 @@
 
         try {
             const response = await fetch(url, { cache: "no-store" });
-            if (!response.ok) {
-                throw new Error(`Impossibile accedere ai dati di configurazione. Status: ${response.status}`);
-            }
+            if (!response.ok) { throw new Error(`Status: ${response.status}`); }
             gitHubMarkdownContent = await response.text();
             
-            statusEl.innerHTML = `<i class="fa-solid fa-circle" style="color: #a3e635;"></i> Connesso a GitHub Live (File Sincronizzato)`;
-            welcomeEl.innerText = `Sincronizzazione completata! Ho elaborato la base documentale direttamente dal tuo archivio su GitHub.\n\nOra sono pronto a rispondere a qualsiasi domanda specifica basandomi sui dati reali del progetto. Di cosa vogliamo discutere?`;
+            if (GEMINI_API_KEY === "INSERISCI_QUI_LA_TUA_API_KEY_GEMINI" || GEMINI_API_KEY === "") {
+                statusEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="color: #fbbf24;"></i> Documento caricato. API Key mancante.`;
+                welcomeEl.innerHTML = `Ho caricato il documento da GitHub, ma per abilitare l'AI Generativa devi inserire la tua <strong>API Key di Gemini</strong> alla riga 212 del file <code>index.html</code>.`;
+                return; 
+            }
+
+            statusEl.innerHTML = `<i class="fa-solid fa-circle" style="color: #a3e635;"></i> LLM Attivo - Contesto Sincronizzato`;
+            welcomeEl.innerText = `Ho analizzato l'intero documento Markdown da GitHub tramite Gemini LLM. \n\nSono in grado di comprendere l'intent delle tue domande, elaborare sintesi complesse (es. "quali sono i problemi tecnici") e ragionare sulle strategie. Chiedi pure!`;
             
             inputEl.disabled = false;
             btnEl.disabled = false;
         } catch (error) {
-            console.error(error);
-            statusEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="color: #f472b6;"></i> Errore di sincronizzazione temporaneo`;
-            welcomeEl.innerText = `Rilevato un problema nel recupero delle informazioni live da GitHub.\n\nVerifica che il repository sia impostato su 'Public' e che la struttura della directory sia allineata su ramo principale.\n\n[Dettaglio: ${error.message}]`;
-            
-            inputEl.disabled = false;
-            btnEl.disabled = false;
+            statusEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="color: #f472b6;"></i> Errore di rete`;
+            welcomeEl.innerText = `Errore di connessione a GitHub: ${error.message}`;
         }
     }
 
@@ -544,92 +513,106 @@
         sendMessage();
     }
 
-    function sendMessage() {
+    async function sendMessage() {
         const inputEl = document.getElementById('userInput');
         const query = inputEl.value.trim();
         if (!query) return;
 
         appendMessage(query, 'user');
         inputEl.value = '';
+        
+        // Aggiungi loader
+        const loaderId = appendMessage('<i class="fa-solid fa-spinner fa-spin"></i> Analisi semantica in corso...', 'loading');
+        inputEl.disabled = true;
 
-        setTimeout(() => {
-            const reply = searchInMarkdownContext(query);
-            appendMessage(reply, 'system');
-        }, 400);
+        try {
+            const reply = await queryGeminiLLM(query);
+            removeMessage(loaderId);
+            appendMessage(formatMarkdown(reply), 'system');
+        } catch (error) {
+            removeMessage(loaderId);
+            appendMessage(`Errore LLM: ${error.message}. Verifica la tua API Key o la connessione.`, 'system');
+        } finally {
+            inputEl.disabled = false;
+            inputEl.focus();
+        }
     }
 
     function appendMessage(text, sender) {
         const chatContainer = document.getElementById('chatMessages');
         const msgEl = document.createElement('div');
+        const id = 'msg-' + Date.now();
+        msgEl.id = id;
         msgEl.className = `message ${sender}`;
-        msgEl.innerText = text;
+        msgEl.innerHTML = text; 
         chatContainer.appendChild(msgEl);
         chatContainer.scrollTop = chatContainer.scrollHeight;
+        return id;
     }
 
-    function searchInMarkdownContext(query) {
-        if (!gitHubMarkdownContent) {
-            return "La base di conoscenza non è stata ancora completamente caricata o sincronizzata.";
-        }
+    function removeMessage(id) {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    }
 
-        const lowerQuery = query.toLowerCase();
-        const lines = gitHubMarkdownContent.split('\n');
-        let relevantPassages = [];
-        let currentSection = "";
+    function formatMarkdown(text) {
+        let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        html = html.replace(/\n\* /g, '<br>• ');
+        html = html.replace(/\n- /g, '<br>• ');
+        return html.replace(/\n/g, '<br>');
+    }
 
-        for (let i = 0; i < lines.length; i++) {
-            if (lines[i].startsWith('#')) {
-                currentSection = lines[i].replace(/#/g, '').trim();
-            }
-
-            if (
-                (lowerQuery.includes("attività") || lowerQuery.includes("urgenti") || lowerQuery.includes("90 giorni") || lowerQuery.includes("piano")) && 
-                (lines[i].includes("1.") || lines[i].includes("2.") || lines[i].includes("3.") || lines[i].includes("4.") || lines[i].includes("Q1") || lines[i].includes("Q2") || lines[i].includes("attività"))
-            ) {
-                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
-            }
-            else if (lowerQuery.includes("gate") && (lines[i].toLowerCase().includes("gate") || lines[i].toLowerCase().includes("autorizzazione") || lines[i].toLowerCase().includes("redirect"))) {
-                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
-            }
-            else if (lowerQuery.includes("jägermeister") && lines[i].toLowerCase().includes("jägermeister")) {
-                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
-            }
-            else if (lowerQuery.includes("ramazzotti") && lines[i].toLowerCase().includes("ramazzotti")) {
-                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
-            }
-            else if (lowerQuery.includes("germania") && lines[i].toLowerCase().includes("germania")) {
-                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
-            }
-            else if (lowerQuery.includes("spagna") && lines[i].toLowerCase().includes("spagna")) {
-                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
-            }
-            else if (lowerQuery.includes("sitemap") && (lines[i].includes("/") || lines[i].toLowerCase().includes("sitemap"))) {
-                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
-            }
-        }
-
-        if (relevantPassages.length > 0) {
-            let uniquePassages = [...new Set(relevantPassages)].slice(0, 10);
-            return `Ecco i dati esatti estratti in tempo reale dalla base di conoscenza:\n\n${uniquePassages.join('\n')}\n\nVuoi analizzare altri dettagli di questa sezione?`;
-        }
-
-        let backupPassages = [];
-        const words = lowerQuery.split(' ');
-        const targetWord = words.find(w => w.length > 4) || "amaro";
+    // =========================================================================
+    // 3. MOTORE LLM GEMINI - CHIAMATA API DIRETTA
+    // =========================================================================
+    async function queryGeminiLLM(userQuery) {
+        // Nota: Il modello gemini-1.5-flash accetta URL in questo formato
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
         
-        for (let i = 0; i < lines.length; i++) {
-            if (lines[i].toLowerCase().includes(targetWord)) {
-                if (lines[i].trim().length > 15 && backupPassages.length < 5) {
-                    backupPassages.push(lines[i].trim());
-                }
+        const systemPrompt = `Sei un Senior SEO Strategist e AI Assistant. Il tuo compito è rispondere alle domande dell'utente basandoti ESCLUSIVAMENTE sul report SEO fornito di seguito.
+        Regole:
+        1. Rispondi in modo professionale, analitico e approfondito.
+        2. Sintetizza i concetti complessi in elenchi puntati se necessario.
+        3. Se l'utente chiede qualcosa che non è presente nel testo (es. costi, password, dati esterni), rispondi chiaramente che l'informazione non è nel report.
+        4. Rispondi in Italiano.
+        
+        === INIZIO REPORT SEO ===
+        ${gitHubMarkdownContent}
+        === FINE REPORT SEO ===`;
+
+        chatHistory.push({ role: "user", parts: [{ text: userQuery }] });
+
+        const payload = {
+            contents: [
+                { role: "user", parts: [{ text: systemPrompt }] },
+                ...chatHistory
+            ],
+            generationConfig: {
+                temperature: 0.2, 
+                topK: 40,
+                topP: 0.95,
+                maxOutputTokens: 1024,
             }
+        };
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.error?.message || "Errore sconosciuto API Gemini");
         }
 
-        if (backupPassages.length > 0) {
-            return `Dalla base di conoscenza ho estratto questi passaggi correlati a '${targetWord}':\n\n${backupPassages.join('\n\n')}`;
-        }
-
-        return "Informazione non trovata all'interno della sottomappatura del file. Prova a interrogarmi sulle '10 attività', sull' 'Age Gate' o sulle differenze competitive dei mercati esteri.";
+        const data = await response.json();
+        const aiResponse = data.candidates[0].content.parts[0].text;
+        
+        chatHistory.push({ role: "model", parts: [{ text: aiResponse }] });
+        
+        return aiResponse;
     }
 </script>
 
