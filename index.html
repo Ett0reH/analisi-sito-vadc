@@ -128,14 +128,13 @@
             scroll-behavior: smooth;
         }
 
-        /* Markdown Styles per le risposte dell'LLM */
         .message { max-width: 90%; padding: 14px 18px; border-radius: 12px; font-size: 14px; line-height: 1.6; }
         .message.system { background-color: rgba(30, 41, 59, 0.4); color: #e2e8f0; align-self: flex-start; border-left: 3px solid #d4af37; }
         .message.system strong { color: #a3e635; }
         .message.system ul { margin-top: 5px; margin-bottom: 5px; padding-left: 20px; }
         .message.system p { margin-top: 0; margin-bottom: 10px; font-size: 14px; }
         .message.user { background-color: #a3e635; color: #020617; font-weight: 600; align-self: flex-end; }
-        .message.loading { font-style: italic; color: #94a3b8; align-self: flex-start; }
+        .message.loading { font-style: italic; color: #94a3b8; align-self: flex-start; background: transparent; padding: 0; }
 
         .ai-suggestions { padding: 10px 15px; display: flex; gap: 6px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.05); }
         .suggestion-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.2); color: #cbd5e1; padding: 5px 10px; border-radius: 15px; font-size: 11px; cursor: pointer; transition: all 0.2s; }
@@ -463,7 +462,7 @@
     };
 
     // =========================================================================
-    // 2. CONFIGURAZIONE API GEMINI (LLM) - AGGIORNATA
+    // 2. CONFIGURAZIONE API GEMINI (LLM)
     // =========================================================================
     const GEMINI_API_KEY = "AQ.Ab8RN6KfzEPIf7ksI005vvpPnWyQiexsN4DVAY5AEOcOE87ZDA"; 
 
@@ -484,7 +483,7 @@
 
         try {
             const response = await fetch(url, { cache: "no-store" });
-            if (!response.ok) { throw new Error(`Status: ${response.status}`); }
+            if (!response.ok) { throw new Error(`Status HTTP: ${response.status}`); }
             gitHubMarkdownContent = await response.text();
             
             if (!GEMINI_API_KEY || GEMINI_API_KEY === "INSERISCI_QUI_LA_TUA_API_KEY_GEMINI") {
@@ -494,7 +493,7 @@
             }
 
             statusEl.innerHTML = `<i class="fa-solid fa-circle" style="color: #a3e635;"></i> LLM Attivo - Contesto Sincronizzato`;
-            welcomeEl.innerText = `Ho analizzato l'intero documento Markdown da GitHub tramite Gemini LLM.\n\nSono pronto a fornirti risposte, approfondimenti o sintesi in base al report. Come ti posso aiutare?`;
+            welcomeEl.innerText = `Ho assimilato la conoscenza necessaria.\n\nSono pronto a fornirti risposte, approfondimenti o sintesi in base al report. Come ti posso aiutare?`;
             
             inputEl.disabled = false;
             btnEl.disabled = false;
@@ -521,7 +520,7 @@
         appendMessage(query, 'user');
         inputEl.value = '';
         
-        const loaderId = appendMessage('<i class="fa-solid fa-spinner fa-spin"></i> Analisi semantica in corso...', 'loading');
+        const loaderId = appendMessage('<i class="fa-solid fa-spinner fa-spin"></i> Analisi in corso...', 'loading');
         inputEl.disabled = true;
 
         try {
@@ -530,7 +529,7 @@
             appendMessage(formatMarkdown(reply), 'system');
         } catch (error) {
             removeMessage(loaderId);
-            appendMessage(`Errore LLM: ${error.message}.`, 'system');
+            appendMessage(`Errore di sistema: ${error.message}`, 'system');
         } finally {
             inputEl.disabled = false;
             inputEl.focus();
@@ -563,55 +562,75 @@
     }
 
     // =========================================================================
-    // 3. MOTORE LLM GEMINI - AGGIORNATO AL MODELLO CORRETTO (LATEST)
+    // 3. MOTORE LLM GEMINI - FALLBACK MULTIPLO E RUOLI SICURI
     // =========================================================================
     async function queryGeminiLLM(userQuery) {
-        // Modello fixato: gemini-1.5-flash-latest
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
-        
         const systemPrompt = `Sei un Senior SEO Strategist e AI Assistant. Il tuo compito è rispondere alle domande dell'utente basandoti ESCLUSIVAMENTE sul report SEO fornito di seguito.
-        Regole:
-        1. Rispondi in modo professionale, analitico e approfondito.
-        2. Sintetizza i concetti complessi in elenchi puntati se necessario.
-        3. Se l'utente chiede qualcosa che non è presente nel testo (es. costi, password, dati esterni), rispondi chiaramente che l'informazione non è nel report.
-        4. Rispondi in Italiano.
-        
-        === INIZIO REPORT SEO ===
-        ${gitHubMarkdownContent}
-        === FINE REPORT SEO ===`;
+Regole:
+1. Rispondi in modo professionale, analitico e approfondito.
+2. Sintetizza i concetti complessi in elenchi puntati se necessario.
+3. Se l'utente chiede qualcosa che non è presente nel testo (es. costi, password, dati esterni), rispondi chiaramente che l'informazione non è nel report.
+4. Rispondi in Italiano.
 
-        chatHistory.push({ role: "user", parts: [{ text: userQuery }] });
+=== INIZIO REPORT SEO ===
+${gitHubMarkdownContent}
+=== FINE REPORT SEO ===`;
+
+        // BUGFIX 2: Eliminato il rischio di crash per invio di ruoli "user" consecutivi
+        // Incorporiamo il System Prompt all'interno della prima richiesta dell'utente
+        let safeQuery = userQuery;
+        if (chatHistory.length === 0) {
+            safeQuery = systemPrompt + "\n\nDOMANDA UTENTE:\n" + userQuery;
+        }
+
+        chatHistory.push({ role: "user", parts: [{ text: safeQuery }] });
 
         const payload = {
-            contents: [
-                { role: "user", parts: [{ text: systemPrompt }] },
-                ...chatHistory
-            ],
+            contents: chatHistory,
             generationConfig: {
                 temperature: 0.2, 
-                topK: 40,
-                topP: 0.95,
                 maxOutputTokens: 1024,
             }
         };
 
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+        // BUGFIX 1: Fallback list. Se un modello va in 404, scala automaticamente sul successivo
+        const fallbackModels = ['gemini-1.5-flash', 'gemini-pro'];
+        let lastErrorMsg = "";
 
-        if (!response.ok) {
-            const errData = await response.json();
-            throw new Error(errData.error?.message || "Errore sconosciuto API Gemini");
+        for (let modelName of fallbackModels) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error?.message || `Errore HTTP ${response.status}`);
+                }
+
+                if (data.candidates && data.candidates.length > 0) {
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+                    chatHistory.push({ role: "model", parts: [{ text: aiResponse }] });
+                    return aiResponse;
+                } else {
+                    throw new Error("Risposta vuota dall'API");
+                }
+
+            } catch (error) {
+                console.warn(`Tentativo fallito con ${modelName}:`, error.message);
+                lastErrorMsg = error.message;
+                // L'engine riproverà immediatamente con il prossimo modello dell'array
+            }
         }
 
-        const data = await response.json();
-        const aiResponse = data.candidates[0].content.parts[0].text;
-        
-        chatHistory.push({ role: "model", parts: [{ text: aiResponse }] });
-        
-        return aiResponse;
+        // Se tutti i modelli falliscono, rimuovo la domanda fallita dalla history per non corrompere la chat
+        chatHistory.pop();
+        throw new Error(lastErrorMsg);
     }
 </script>
 
