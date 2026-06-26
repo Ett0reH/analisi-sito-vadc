@@ -120,7 +120,7 @@
         
         .ai-chat-messages {
             flex-grow: 1;
-            padding: 20px;
+            padding: 24px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -128,12 +128,12 @@
             scroll-behavior: smooth;
         }
 
-        .message { max-width: 90%; padding: 14px 18px; border-radius: 12px; font-size: 14px; line-height: 1.6; }
-        .message.system { background-color: rgba(30, 41, 59, 0.4); color: #e2e8f0; align-self: flex-start; border-left: 3px solid #d4af37; }
+        .message { max-width: 100%; padding: 16px 20px; border-radius: 12px; font-size: 14px; line-height: 1.55; }
+        .message.system { width: 100%; background-color: rgba(30, 41, 59, 0.4); color: #e2e8f0; align-self: flex-start; border-left: 3px solid #d4af37; }
         .message.system strong { color: #a3e635; }
         .message.system ul { margin-top: 5px; margin-bottom: 5px; padding-left: 20px; }
         .message.system p { margin-top: 0; margin-bottom: 10px; font-size: 14px; }
-        .message.user { background-color: #a3e635; color: #020617; font-weight: 600; align-self: flex-end; }
+        .message.user { max-width: 88%; background-color: #a3e635; color: #020617; font-weight: 600; align-self: flex-end; }
         .message.loading { font-style: italic; color: #94a3b8; align-self: flex-start; background: transparent; padding: 0; }
 
         .ai-suggestions { padding: 10px 15px; display: flex; gap: 6px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -607,10 +607,11 @@
     async function queryGeminiLLM(userQuery) {
         const systemPrompt = `Sei un Senior SEO Strategist e AI Assistant. Il tuo compito è rispondere alle domande dell'utente basandoti ESCLUSIVAMENTE sul report SEO fornito di seguito.
 Regole:
-1. Rispondi in modo professionale, analitico e approfondito.
-2. Sintetizza i concetti complessi in elenchi puntati se necessario.
+1. Rispondi in modo professionale, diretto e sintetico.
+2. Ogni risposta deve contenere massimo tre frasi totali.
 3. Se l'utente chiede qualcosa che non è presente nel testo (es. costi, password, dati esterni), rispondi chiaramente che l'informazione non è nel report.
-4. Rispondi in Italiano.
+4. Non usare introduzioni lunghe, premesse generiche o elenchi oltre tre punti.
+5. Rispondi in Italiano.
 
 === INIZIO REPORT SEO ===
 ${gitHubMarkdownContent}
@@ -618,9 +619,9 @@ ${gitHubMarkdownContent}
 
         // BUGFIX 2: Eliminato il rischio di crash per invio di ruoli "user" consecutivi
         // Incorporiamo il System Prompt all'interno della prima richiesta dell'utente
-        let safeQuery = userQuery;
+        let safeQuery = "Rispondi in massimo tre frasi, in modo sintetico e concreto.\n\nDOMANDA UTENTE:\n" + userQuery;
         if (chatHistory.length === 0) {
-            safeQuery = systemPrompt + "\n\nDOMANDA UTENTE:\n" + userQuery;
+            safeQuery = systemPrompt + "\n\n" + safeQuery;
         }
 
         chatHistory.push({ role: "user", parts: [{ text: safeQuery }] });
@@ -629,7 +630,7 @@ ${gitHubMarkdownContent}
             contents: chatHistory,
             generationConfig: {
                 temperature: 0.2, 
-                maxOutputTokens: 1024,
+                maxOutputTokens: 220,
             }
         };
 
