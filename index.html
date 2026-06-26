@@ -468,6 +468,7 @@
 
     let gitHubMarkdownContent = ""; 
     let chatHistory = [];
+    const MAX_CHAT_HISTORY_MESSAGES = 3;
     const PREFERRED_GEMINI_MODELS = [
         'gemini-3.5-flash',
         'gemini-2.5-flash',
@@ -572,6 +573,12 @@
     // =========================================================================
     // 3. MOTORE LLM GEMINI - FALLBACK MULTIPLO E RUOLI SICURI
     // =========================================================================
+    function trimChatHistory() {
+        if (chatHistory.length > MAX_CHAT_HISTORY_MESSAGES) {
+            chatHistory = chatHistory.slice(-MAX_CHAT_HISTORY_MESSAGES);
+        }
+    }
+
     async function getGenerateContentModels() {
         if (cachedGenerateContentModels) return cachedGenerateContentModels;
 
@@ -617,16 +624,15 @@ Regole:
 ${gitHubMarkdownContent}
 === FINE REPORT SEO ===`;
 
-        // BUGFIX 2: Eliminato il rischio di crash per invio di ruoli "user" consecutivi
-        // Incorporiamo il System Prompt all'interno della prima richiesta dell'utente
         let safeQuery = "Rispondi in massimo tre frasi, in modo sintetico e concreto.\n\nDOMANDA UTENTE:\n" + userQuery;
-        if (chatHistory.length === 0) {
-            safeQuery = systemPrompt + "\n\n" + safeQuery;
-        }
 
         chatHistory.push({ role: "user", parts: [{ text: safeQuery }] });
+        trimChatHistory();
 
         const payload = {
+            systemInstruction: {
+                parts: [{ text: systemPrompt }]
+            },
             contents: chatHistory,
             generationConfig: {
                 temperature: 0.2, 
@@ -657,6 +663,7 @@ ${gitHubMarkdownContent}
                 const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
                 if (aiResponse) {
                     chatHistory.push({ role: "model", parts: [{ text: aiResponse }] });
+                    trimChatHistory();
                     return aiResponse;
                 } else {
                     const blockReason = data.promptFeedback?.blockReason || data.candidates?.[0]?.finishReason;
