@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* SETUP INTEGRATO & SCROLLBARS */
+        /* SETUP INTEGRATO & LAYOUT BLINDATO */
         * { box-sizing: border-box; }
         body {
             background-color: #090d16;
@@ -18,16 +18,19 @@
             font-family: 'Urbanist', sans-serif;
             color: #f1f5f9;
             display: flex;
+            flex-direction: row;
             height: 100vh;
+            width: 100vw;
             overflow: hidden;
         }
 
-        /* AREA PRESENTAZIONE (SINISTRA) */
+        /* AREA PRESENTAZIONE (SINISTRA) - Flessibile ma contenuta */
         .main-content {
-            flex-grow: 1;
+            flex: 1;
+            min-width: 0; /* Previene l'espansione infinita che spinge via la sidebar */
             height: 100vh;
             overflow-y: auto;
-            scroll-behavior: smooth;
+            overflow-x: hidden;
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
@@ -38,7 +41,7 @@
         .slide-container {
             width: 100%;
             max-width: 1150px;
-            height: 650px;
+            min-height: 650px;
             background-color: #020617;
             border-radius: 16px;
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
@@ -48,7 +51,6 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(212, 175, 55, 0.12);
-            flex-shrink: 0;
         }
 
         .slide-container::before {
@@ -123,15 +125,16 @@
         .number-box { padding: 25px; background: rgba(255,255,255,0.02); border-radius: 12px; border-bottom: 4px solid #a3e635; border: 1px solid rgba(255,255,255,0.05); }
         .big-number { font-size: 48px; font-weight: 700; color: #d4af37; display: block; margin-bottom: 5px; font-family: 'Playfair Display', serif; }
 
-        /* CO-PILOTA AI SIDEBAR REALE */
+        /* CO-PILOTA AI SIDEBAR (DESTRA) - Inamovibile */
         .ai-sidebar {
             width: 440px;
+            min-width: 440px; /* Fondamentale: impedisce alla sidebar di sparire */
             background-color: #0b1224;
             border-left: 1px solid rgba(212, 175, 55, 0.15);
             display: flex;
             flex-direction: column;
             height: 100vh;
-            flex-shrink: 0;
+            z-index: 100;
         }
 
         .ai-header {
@@ -203,7 +206,7 @@
                 </div>
                 <div class="tile">
                     <h3>Il Limite dell'Ampiezza</h3>
-                    <p>Questo patrimonio informativo è bloccato in un'infrastruttura troppo stretta. Il posizionamento acquittal è frammentato su poche pagine isolate (Home locali, brand story, singole schede prodotto). <strong>Mancano veri hub editoriali interconnessi</strong> in grado di intercettare query informational ad alto volume.</p>
+                    <p>Questo patrimonio informativo è bloccato in un'infrastruttura troppo stretta. Il posizionamento attuale è frammentato su poche pagine isolate (Home locali, brand story, singole schede prodotto). <strong>Mancano veri hub editoriali interconnessi</strong> in grado di intercettare query informational ad alto volume.</p>
                 </div>
             </div>
         </div>
@@ -312,3 +315,323 @@
 
     <div class="slide-container" id="slide7">
         <h2 class="slide-title">Mercati Esteri: Analisi degli Search Intents</h2>
+        <div class="content-area">
+            <div class="three-column">
+                <div class="tile">
+                    <h3>Germania (Informational)</h3>
+                    <p style="font-size:13.5px; line-height:1.5;">La domanda informativa tedesca si concentra su macro-categorie d'uso (<strong>Kräuterlikör, Digestif, Aperitif</strong>). Il sito deve posizionarsi offrendo guide di consumo strutturate e ricettazioni stagionali complesse per rompere il monopolio informativo di Ramazzotti.</p>
+                </div>
+                <div class="tile">
+                    <h3>Spagna (Convivialità)</h3>
+                    <p style="font-size:13.5px; line-height:1.5;">L'intento di ricerca spagnolo ruota attorno ai trend di socializzazione diurni: <strong>Aperitivo, Cócteles, Spritz</strong>. È necessario posizionare l'Amaro del Capo come un modulatore ideale e rinfrescante per twist su drink classici.</p>
+                </div>
+                <div class="tile">
+                    <h3>Global EN (Education)</h3>
+                    <p style="font-size:13.5px; line-height:1.5;">Il pubblico anglofono esprime bisogni legati all'educazione merceologica elementare. La categorizzazione vaga attuale ("Italian liquor") va sostituita targettizzando query precise come <strong>Italian amaro, Italian herbal liqueur</strong> ed approfondimenti comparativi (<strong>Amaro vs Vermouth</strong>).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide8">
+        <h2 class="slide-title">Evoluzione Strutturale: Modello Hub-and-Spoke</h2>
+        <div class="content-area">
+            <p style="margin-bottom:25px;">Per massimizzare l'autorità semantica ed ottenere il posizionamento sui motori di ricerca tradizionali e sugli assistenti generativi (LLM), i contenuti vengono riorganizzati in <strong>quattro macro-hub interconnessi</strong>:</p>
+            <div class="two-column">
+                <div class="tile">
+                    <h3 style="font-size:19px;"><i class="fa-solid fa-bottle-droplet" style="color:#d4af37; margin-right:10px;"></i> Product Hub (Brand Core)</h3>
+                    <p style="font-size:13.5px; margin:0;">Pagine dedicate al serving ritual (l'importanza dei -20°C), approfondimenti analitici sui 29 ingredienti botanici calabresi, sezioni FAQ verticali per prodotto e abbinamenti consigliati (pairing).</p>
+                </div>
+                <div class="tile">
+                    <h3 style="font-size:19px;"><i class="fa-solid fa-martini-glass" style="color:#a3e635; margin-right:10px;"></i> Recipe Hub (Intercettazione Volume)</h3>
+                    <p style="font-size:13.5px; margin:0;">Cluster semantici tassonomici strutturati per Occasione di consumo (Aperitivo, After-dinner), Stagionalità (Summer drinks, Winter serve), Profilo di Gusto e livello di difficoltà tecnica.</p>
+                </div>
+                <div class="tile">
+                    <h3 style="font-size:19px;"><i class="fa-solid fa-graduation-cap" style="color:#38bdf8; margin-right:10px;"></i> Category Hub (Educational Puro)</h3>
+                    <p style="font-size:13.5px; margin:0;">Guide enciclopediche e storiche sulla tradizione degli amari italiani, l'arte della gastronomia erboristica ed enciclopedie comparative volte a catturare query informational ad alto volume.</p>
+                </div>
+                <div class="tile">
+                    <h3 style="font-size:19px;"><i class="fa-solid fa-shaker" style="color:#f472b6; margin-right:10px;"></i> Trade Hub (B2B & Link Earning)</h3>
+                    <p style="font-size:13.5px; margin:0;">Risorse tecniche dedicate ai professionisti del settore, signature drinks firmati, schede di miscelazione scaricabili e un ecosistema di contenuti pensato per attrarre backlink spontanei.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide9">
+        <h2 class="slide-title">Proposta di Sitemap Internazionale Speculare</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3 style="font-size:18px; color:#d4af37; margin-bottom:10px;">Directory Brand & Prodotto</h3>
+                    <ul class="bullet-list" style="font-size:13.5px;">
+                        <li><code>/it-it/</code> (o sub-directory locali corrispondenti es. <code>/de-de/</code>)</li>
+                        <li><code>/brand/calabria-e-ingredienti/</code> <span style="color:#94a3b8; font-size:12px;">(Storytelling botanico)</span></li>
+                        <li><code>/brand/perche-a-20-gradi/</code> <span style="color:#94a3b8; font-size:12px;">(Presidio del rituale)</span></li>
+                        <li><code>/products/riserva-del-centenario/</code> <span style="color:#94a3b8; font-size:12px;">(Pillar Premium)</span></li>
+                        <li><code>/products/red-hot-edition/</code> <span style="color:#94a3b8; font-size:12px;">(Pillar Variant)</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="font-size:18px; color:#a3e635; margin-bottom:10px;">Directory Editoriale & Commerciale</h3>
+                    <ul class="bullet-list" style="font-size:13.5px;">
+                        <li><code>/journal/what-is-amaro-guide/</code> <span style="color:#94a3b8; font-size:12px;">(Intercettazione Informational)</span></li>
+                        <li><code>/journal/amaro-vs-vermouth/</code> <span style="color:#94a3b8; font-size:12px;">(Query comparativa)</span></li>
+                        <li><code>/cocktails/by-occasion/aperitivo/</code> <span style="color:#94a3b8; font-size:12px;">(Intercettazione Trend ES/IT)</span></li>
+                        <li><code>/where-to-buy/germany/</code> <span style="color:#94a3b8; font-size:12px;">(Intento transazionale locale)</span></li>
+                        <li><code>/bartenders/signature-serves/</code> <span style="color:#94a3b8; font-size:12px;">(Hub B2B calamita-link)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide10">
+        <h2 class="slide-title">I Primi 90 Giorni: Fondamenta Urgenti</h2>
+        <div class="content-area table-layout">
+            <p style="margin-bottom:10px; font-size:14px;">Queste 10 attività operative sbloccano i blocchi tecnici strutturali e gettano le basi per la crescita futura:</p>
+            <div class="two-column" style="gap:20px;">
+                <ul class="bullet-list" style="font-size:13px;">
+                    <li><strong>01.</strong> Audit tecnico e rimozione vincoli dell'Age Gate.</li>
+                    <li><strong>02.</strong> Disegno della tassonomia internazionale e piano Hreflang.</li>
+                    <li><strong>03.</strong> Correzione refusi e stringhe di localizzazione ibride.</li>
+                    <li><strong>04.</strong> Disegno dei template strutturati (Product/Recipe/Guide).</li>
+                    <li><strong>05.</strong> Lancio dell'Hub informational "What is Amaro".</li>
+                </ul>
+                <ul class="bullet-list" style="font-size:13px;">
+                    <li><strong>06.</strong> Lancio dell'Hub esperienziale "How to drink it".</li>
+                    <li><strong>07.</strong> Creazione pagine commerciali Where-to-Buy per i 4 mercati.</li>
+                    <li><strong>08.</strong> Revisione completa dei flussi di internal linking delle ricette.</li>
+                    <li><strong>09.</strong> Implementazione schemi di markup Rich (Product, Recipe, Breadcrumb).</li>
+                    <li><strong>10.</strong> Setup delle KPI Dashboard integrate (GSC, GA4, Core Web Vitals).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide11">
+        <h2 class="slide-title">Piano di Sviluppo Consolidato (Attività 11-20)</h2>
+        <div class="content-area">
+            <p style="margin-bottom:15px; font-size:14px;">Attività continuative destinate a far scalare l'autorità del dominio sulle query non-brand e nei motori generativi (AI Search):</p>
+            <div class="two-column" style="gap:20px;">
+                <ul class="bullet-list" style="font-size:13px;">
+                    <li><strong>11.</strong> Clusterizzazione cocktail stagionali estate/inverno.</li>
+                    <li><strong>12.</strong> Sviluppo cluster d'uso aperitivo/after dinner personalizzati per paese.</li>
+                    <li><strong>13.</strong> Pubblicazione di serie editoriali focalizzate sui botanicals e la Calabria.</li>
+                    <li><strong>14.</strong> Lancio dell'Hub verticale dedicato al Food Pairing.</li>
+                    <li><strong>15.</strong> Creazione di un hub esclusivo per il Gifting e le edizioni Premium/Riserva.</li>
+                </ul>
+                <ul class="bullet-list" style="font-size:13px;">
+                    <li><strong>16.</strong> Vetrina "Bartender Signatures" con coinvolgimento attivo della community.</li>
+                    <li><strong>17.</strong> Sviluppo di pagine dedicate a venue, eventi e contenuti in partnership.</li>
+                    <li><strong>18.</strong> Audit, compressione e ottimizzazione della Media Library d'archivio.</li>
+                    <li><strong>19.</strong> Campagne mirate di Digital PR incentrate sulla miscelazione e l'heritage.</li>
+                    <li><strong>20.</strong> Refresh trimestrale ciclico delle pagine più importanti basato su dati GSC.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide12">
+        <h2 class="slide-title">KPI di Progetto: Massimizzare la Visibilità Generativa</h2>
+        <div class="content-area">
+            <div class="highlight-numbers">
+                <div class="number-box">
+                    <span class="big-number">Non-Brand</span>
+                    <p style="font-size:13.5px;">Incremento delle impressioni su chiavi informational slegate dal nome del brand.</p>
+                </div>
+                <div class="number-box">
+                    <span class="big-number">Cross-Border</span>
+                    <p style="font-size:13.5px;">Corretto bilanciamento del traffico organico in ingresso tra le directory IT, DE, ES.</p>
+                </div>
+                <div class="number-box">
+                    <span class="big-number">AI Engines</span>
+                    <p style="font-size:13.5px;">Inclusione del brand come fonte citata all'interno delle risposte fornite da LLM e SGE.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 35px;">
+                <p style="font-size:15px; color:#a3e635; font-weight:600; letter-spacing:1px;">IL SITO BRAND DEVE TRASFORMARSI IN UNA FONTE DI VERITÀ AUTOREVOLE E STRUTTURATA.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ai-sidebar">
+    <div class="ai-header">
+        <i class="fa-solid fa-brain"></i>
+        <div>
+            <h2>Strategic AI Co-Pilot</h2>
+            <p>Connesso direttamente alla Root di GitHub</p>
+        </div>
+    </div>
+    
+    <div class="ai-status-bar" id="aiStatus">
+        <i class="fa-solid fa-sync fa-spin"></i> Sto caricando la conoscenza...
+    </div>
+    
+    <div class="ai-chat-messages" id="chatMessages">
+        <div class="message system" id="welcomeMessage">
+            Sto caricando la conoscenza strategica direttamente dal repository GitHub per allineare il modulo di risposta...
+        </div>
+    </div>
+
+    <div class="ai-suggestions">
+        <div class="suggestion-btn" onclick="sendSuggestion('Quali sono le 10 attività urgenti?')">Top 10 Attività</div>
+        <div class="suggestion-btn" onclick="sendSuggestion('Spiega il problema dell\'Age Gate')">Problema Age Gate</div>
+        <div class="suggestion-btn" onclick="sendSuggestion('Cosa dice il report su Jägermeister e Ramazzotti?')">Analisi Competitor</div>
+        <div class="suggestion-btn" onclick="sendSuggestion('Quali sono le raccomandazioni per il mercato tedesco?')">Focus Germania</div>
+    </div>
+
+    <div class="ai-input-area">
+        <input type="text" id="userInput" placeholder="Interroga l'AI sul report live da GitHub..." onkeypress="handleKeyPress(event)" disabled>
+        <button onclick="sendMessage()" id="sendBtn" disabled>Invia</button>
+    </div>
+</div>
+
+<script>
+    // =========================================================================
+    // CONFIGURAZIONE REPOSITORY GITHUB
+    // =========================================================================
+    const GITHUB_CONFIG = {
+        username: "Ett0reH",
+        repository: "analisi-sito-vadc",
+        filename: "deep-research-report(2).md",
+        branch: "main"
+    };
+
+    let gitHubMarkdownContent = ""; 
+
+    window.addEventListener('DOMContentLoaded', () => {
+        fetchMarkdownFromGitHub();
+    });
+
+    async function fetchMarkdownFromGitHub() {
+        const statusEl = document.getElementById('aiStatus');
+        const welcomeEl = document.getElementById('welcomeMessage');
+        const inputEl = document.getElementById('userInput');
+        const btnEl = document.getElementById('sendBtn');
+
+        const url = `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repository}/${GITHUB_CONFIG.branch}/${GITHUB_CONFIG.filename}`;
+
+        try {
+            const response = await fetch(url, { cache: "no-store" });
+            if (!response.ok) {
+                throw new Error(`Impossibile accedere ai dati di configurazione. Status: ${response.status}`);
+            }
+            gitHubMarkdownContent = await response.text();
+            
+            statusEl.innerHTML = `<i class="fa-solid fa-circle" style="color: #a3e635;"></i> Connesso a GitHub Live (File Sincronizzato)`;
+            welcomeEl.innerText = `Sincronizzazione completata! Ho elaborato la base documentale direttamente dal tuo archivio su GitHub.\n\nOra sono pronto a rispondere a qualsiasi domanda specifica basandomi sui dati reali del progetto. Di cosa vogliamo discutere?`;
+            
+            inputEl.disabled = false;
+            btnEl.disabled = false;
+        } catch (error) {
+            console.error(error);
+            statusEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="color: #f472b6;"></i> Errore di sincronizzazione temporaneo`;
+            welcomeEl.innerText = `Rilevato un problema nel recupero delle informazioni live da GitHub.\n\nVerifica che il repository sia impostato su 'Public' e che la struttura della directory sia allineata su ramo principale.\n\n[Dettaglio: ${error.message}]`;
+            
+            inputEl.disabled = false;
+            btnEl.disabled = false;
+        }
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') { sendMessage(); }
+    }
+
+    function sendSuggestion(text) {
+        document.getElementById('userInput').value = text;
+        sendMessage();
+    }
+
+    function sendMessage() {
+        const inputEl = document.getElementById('userInput');
+        const query = inputEl.value.trim();
+        if (!query) return;
+
+        appendMessage(query, 'user');
+        inputEl.value = '';
+
+        setTimeout(() => {
+            const reply = searchInMarkdownContext(query);
+            appendMessage(reply, 'system');
+        }, 400);
+    }
+
+    function appendMessage(text, sender) {
+        const chatContainer = document.getElementById('chatMessages');
+        const msgEl = document.createElement('div');
+        msgEl.className = `message ${sender}`;
+        msgEl.innerText = text;
+        chatContainer.appendChild(msgEl);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function searchInMarkdownContext(query) {
+        if (!gitHubMarkdownContent) {
+            return "La base di conoscenza non è stata ancora completamente caricata o sincronizzata.";
+        }
+
+        const lowerQuery = query.toLowerCase();
+        const lines = gitHubMarkdownContent.split('\n');
+        let relevantPassages = [];
+        let currentSection = "";
+
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].startsWith('#')) {
+                currentSection = lines[i].replace(/#/g, '').trim();
+            }
+
+            if (
+                (lowerQuery.includes("attività") || lowerQuery.includes("urgenti") || lowerQuery.includes("90 giorni") || lowerQuery.includes("piano")) && 
+                (lines[i].includes("1.") || lines[i].includes("2.") || lines[i].includes("3.") || lines[i].includes("4.") || lines[i].includes("Q1") || lines[i].includes("Q2") || lines[i].includes("attività"))
+            ) {
+                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
+            }
+            else if (lowerQuery.includes("gate") && (lines[i].toLowerCase().includes("gate") || lines[i].toLowerCase().includes("autorizzazione") || lines[i].toLowerCase().includes("redirect"))) {
+                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
+            }
+            else if (lowerQuery.includes("jägermeister") && lines[i].toLowerCase().includes("jägermeister")) {
+                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
+            }
+            else if (lowerQuery.includes("ramazzotti") && lines[i].toLowerCase().includes("ramazzotti")) {
+                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
+            }
+            else if (lowerQuery.includes("germania") && lines[i].toLowerCase().includes("germania")) {
+                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
+            }
+            else if (lowerQuery.includes("spagna") && lines[i].toLowerCase().includes("spagna")) {
+                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
+            }
+            else if (lowerQuery.includes("sitemap") && (lines[i].includes("/") || lines[i].toLowerCase().includes("sitemap"))) {
+                if (lines[i].trim().length > 5) relevantPassages.push(lines[i].trim());
+            }
+        }
+
+        if (relevantPassages.length > 0) {
+            let uniquePassages = [...new Set(relevantPassages)].slice(0, 10);
+            return `Ecco i dati esatti estratti in tempo reale dalla base di conoscenza:\n\n${uniquePassages.join('\n')}\n\nVuoi analizzare altri dettagli di questa sezione?`;
+        }
+
+        let backupPassages = [];
+        const words = lowerQuery.split(' ');
+        const targetWord = words.find(w => w.length > 4) || "amaro";
+        
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].toLowerCase().includes(targetWord)) {
+                if (lines[i].trim().length > 15 && backupPassages.length < 5) {
+                    backupPassages.push(lines[i].trim());
+                }
+            }
+        }
+
+        if (backupPassages.length > 0) {
+            return `Dalla base di conoscenza ho estratto questi passaggi correlati a '${targetWord}':\n\n${backupPassages.join('\n\n')}`;
+        }
+
+        return "Informazione non trovata all'interno della sottomappatura del file. Prova a interrogarmi sulle '10 attività', sull' 'Age Gate' o sulle differenze competitive dei mercati esteri.";
+    }
+</script>
+
+</body>
+</html>
