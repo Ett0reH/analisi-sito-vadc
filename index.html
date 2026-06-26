@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisi SEO Strategica - Vecchio Amaro del Capo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. SETUP FONDAMENTALE & LAYOUT */
+        * { box-sizing: border-box; }
+        body {
+            background-color: #0f172a;
+            margin: 0;
+            padding: 0;
+            font-family: 'Urbanist', sans-serif;
+            color: #f1f5f9;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Main Content Container per le Slide */
+        .main-content {
+            flex-grow: 1;
+            height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .slide-container {
+            width: 100%;
+            max-width: 1120px;
+            height: 630px; /* Scala 16:9 leggermente ridotta per convivere con la chat */
+            background-color: #020617;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            flex-shrink: 0;
+        }
+
+        /* SFONDO DECORATIVO - GRADIENT BLOBS */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 2. TIPOGRAFIA */
+        h1, h2, h3 { font-family: 'Playfair Display', serif; margin: 0; z-index: 1; }
+
+        .slide-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 30px;
+            border-left: 4px solid #a3e635;
+            padding-left: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p, li, td, th { font-size: 16px; line-height: 1.6; color: #cbd5e1; z-index: 1; }
+
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            z-index: 1;
+        }
+
+        /* 3. LAYOUT SPECIFICI SLIDE */
+        .title-layout { text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .title-layout h1 { font-size: 64px; color: #fff; margin-bottom: 15px; }
+        .title-layout .subtitle { font-size: 20px; color: #a3e635; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; }
+        .title-layout .accent-line { width: 80px; height: 2px; background: #d4af37; margin: 20px 0; }
+
+        .two-column.tiled { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .tile { background: rgba(30, 41, 59, 0.4); padding: 30px; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.15); }
+        .tile h3 { font-size: 24px; color: #a3e635; margin-bottom: 15px; font-family: 'Urbanist', sans-serif; font-weight: 600; }
+
+        .tiled-content { display: flex; gap: 20px; width: 100%; }
+        .icon-tile { flex: 1; background: rgba(15, 23, 42, 0.8); padding: 25px; border-radius: 12px; text-align: center; border-top: 3px solid #d4af37; }
+        .icon-tile .icon { font-size: 35px; color: #a3e635; margin-bottom: 15px; }
+
+        .table-layout table { width: 100%; border-collapse: collapse; }
+        .table-layout th { background: rgba(212, 175, 55, 0.08); color: #d4af37; text-align: left; padding: 12px; border-bottom: 2px solid #d4af37; }
+        .table-layout td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+
+        .chart-container { display: flex; justify-content: center; align-items: center; gap: 40px; }
+        .doughnut-chart { width: 280px; height: 280px; border-radius: 50%; background: conic-gradient(#d4af37 0% 55%, #a3e635 55% 75%, #38bdf8 75% 90%, #f472b6 90% 100%); position: relative; }
+        .doughnut-chart::after { content: ''; position: absolute; width: 200px; height: 200px; background: #020617; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+        .image-wrapper { border-radius: 12px; overflow: hidden; height: 100%; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .two-column.image-text { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+        .timeline-layout { display: flex; justify-content: space-between; position: relative; margin-top: 30px; }
+        .timeline-line { position: absolute; top: 20px; left: 0; width: 100%; height: 2px; background: rgba(212, 175, 55, 0.2); z-index: 0; }
+        .timeline-item { flex: 1; text-align: center; position: relative; z-index: 1; padding: 0 10px; }
+        .timeline-dot { width: 40px; height: 40px; background: #020617; border: 3px solid #a3e635; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+
+        .bleed-image-layout { display: grid; grid-template-columns: 1fr 1fr; padding: 0 !important; }
+        .bleed-image-layout .content-container { padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+        .bleed-image-layout .image-container img { width: 100%; height: 630px; object-fit: cover; border-radius: 0 12px 12px 0; }
+
+        .highlight-numbers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; }
+        .number-box { padding: 30px; background: rgba(255,255,255,0.03); border-radius: 12px; border-bottom: 4px solid #a3e635; }
+        .big-number { font-size: 56px; font-weight: 700; color: #d4af37; display: block; margin-bottom: 5px; }
+        
+        .bullet-list { list-style: none; padding: 0; }
+        .bullet-list li { margin-bottom: 12px; padding-left: 30px; position: relative; }
+        .bullet-list li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: #a3e635; }
+
+        /* 4. CO-PILOTA AI SIDEBAR (INTERATTIVO LATO UTENTE) */
+        .ai-sidebar {
+            width: 420px;
+            background-color: #0b1329;
+            border-left: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            flex-shrink: 0;
+        }
+
+        .ai-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #020617 0%, #0b1329 100%);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ai-header i { font-size: 24px; color: #a3e635; }
+        .ai-header h2 { font-size: 20px; margin: 0; color: #fff; font-family: 'Urbanist', sans-serif; font-weight: 700; }
+        .ai-header p { font-size: 12px; margin: 3px 0 0 0; color: #94a3b8; }
+
+        .ai-chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.system {
+            background-color: rgba(30, 41, 59, 0.5);
+            color: #cbd5e1;
+            align-self: flex-start;
+            border-left: 3px solid #d4af37;
+        }
+
+        .message.user {
+            background-color: #a3e635;
+            color: #020617;
+            font-weight: 500;
+            align-self: flex-end;
+        }
+
+        .ai-suggestions {
+            padding: 10px 20px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .suggestion-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion-btn:hover {
+            background: rgba(163, 230, 53, 0.1);
+            color: #a3e635;
+            border-color: #a3e635;
+        }
+
+        .ai-input-area {
+            padding: 20px;
+            background-color: #020617;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-input-area input {
+            flex-grow: 1;
+            background: #1e293b;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Urbanist', sans-serif;
+            font-size: 14px;
+        }
+
+        .ai-input-area input:focus { outline: none; border-color: #d4af37; }
+
+        .ai-input-area button {
+            background: #d4af37;
+            color: #020617;
+            border: none;
+            padding: 0 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .ai-input-area button:hover { background: #a3e635; }
+    </style>
+</head>
+<body>
+
+<div class="main-content">
+    
+    <div class="slide-container" id="slide1">
+        <div class="title-layout">
+            <div class="subtitle">Analisi SEO Strategica & Operativa</div>
+            <div class="accent-line"></div>
+            <h1>Vecchio Amaro del Capo</h1>
+            <p>Trasformare il Brand Site in una Piattaforma Editoriale Globale</p>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide2">
+        <h2 class="slide-title">Visione Strategica</h2>
+        <div class="content-area">
+            <div class="two-column tiled">
+                <div class="tile">
+                    <h3>Asset Attuali</h3>
+                    <p>Comunicazione forte su 29 ingredienti calabresi, rito del consumo a -20°C e mixology identitaria. Il sito è però limitato a un approccio "vetrina".</p>
+                </div>
+                <div class="tile">
+                    <h3>Obiettivo SEO</h3>
+                    <p>Evolvere verso un modello <strong>Hub-and-Spoke</strong>. Coprire Heritage, Education di categoria, Occasioni di consumo e percorsi commerciali locali.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide3">
+        <h2 class="slide-title">Audit Tecnico & IA</h2>
+        <div class="content-area">
+            <div class="table-layout">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Area Analisi</th>
+                            <th>Stato Attuale & Criticità</th>
+                            <th>Impatto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Age Gate</strong></td>
+                            <td>Redirect complessi che possono ostacolare il crawling e la UX.</td>
+                            <td style="color: #f472b6; font-weight: bold;">Alto</td>
+                        </tr>
+                        <tr>
+                            <td><strong>International IA</strong></td>
+                            <td>Navigazioni non uniformi tra IT, DE, ES e EN; portafogli diversi.</td>
+                            <td style="color: #f472b6; font-weight: bold;">Alto</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Localizzazione</strong></td>
+                            <td>Traduzioni ibride ("Geheimnisse del Capo") e frammenti in inglese.</td>
+                            <td style="color: #fbbf24; font-weight: bold;">Medio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Content Depth</strong></td>
+                            <td>Mancano hub editoriali su "Cos'è l'amaro" e guide all'acquisto.</td>
+                            <td style="color: #f472b6; font-weight: bold;">Alto</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide4">
+        <h2 class="slide-title">Benchmark Competitivo</h2>
+        <div class="content-area">
+            <div class="tiled-content">
+                <div class="icon-tile">
+                    <div class="icon"><i class="fa-solid fa-users"></i></div>
+                    <h3>Jägermeister</h3>
+                    <p>Modello Community & Culture (Hubertus Circle). Forte presidio editoriale B2B e B2C.</p>
+                </div>
+                <div class="icon-tile">
+                    <div class="icon"><i class="fa-solid fa-earth-americas"></i></div>
+                    <h3>Montenegro</h3>
+                    <p>Coerenza internazionale superiore e credibilità mixology ("The Vero Bartender").</p>
+                </div>
+                <div class="icon-tile">
+                    <div class="icon"><i class="fa-solid fa-martini-glass-citrus"></i></div>
+                    <h3>Ramazzotti</h3>
+                    <p>Benchmark per la Germania: ricette stagionali e ecosistema esperienziale (Casa Ramazzotti).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide5">
+        <h2 class="slide-title">Priorità Mercati Internazionali</h2>
+        <div class="content-area">
+            <div class="chart-container">
+                <div class="doughnut-chart"></div>
+                <div class="legend">
+                    <ul class="bullet-list">
+                        <li><span style="color:#d4af37">■</span> <strong>Italia (55%):</strong> Presidio categoria e rituale.</li>
+                        <li><span style="color:#a3e635">■</span> <strong>Germania (20%):</strong> Focus Kräuterlikör & Occasioni.</li>
+                        <li><span style="color:#38bdf8">■</span> <strong>Spagna (15%):</strong> Mondo Aperitivo & Spritz.</li>
+                        <li><span style="color:#f472b6">■</span> <strong>Global/EN (10%):</strong> Education (What is Amaro).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide9">
+        <h2 class="slide-title">Piano di Implementazione</h2>
+        <div class="content-area">
+            <div class="timeline-layout">
+                <div class="timeline-line"></div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">Q1</div>
+                    <h3>Fondamenta</h3>
+                    <p>Audit tecnico, IA design, revisione localizzazione.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">Q2</div>
+                    <h3>Lancio</h3>
+                    <p>Migrazione, nuovi template, markup strutturato.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">Q3</div>
+                    <h3>Espansione</h3>
+                    <p>Hub cocktail, "Where to buy", Digital PR estiva.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">Q4</div>
+                    <h3>Consolidamento</h3>
+                    <p>Stagionalità invernale, Gifting, AI visibility.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ai-sidebar">
+    <div class="ai-header">
+        <i class="fa-solid fa-robot"></i>
+        <div>
+            <h2>Strategist AI Co-Pilot</h2>
+            <p>Consapevolezza totale sul report Vecchio Amaro del Capo</p>
+        </div>
+    </div>
+    
+    <div class="ai-chat-messages" id="chatMessages">
+        <div class="message system">
+            Ciao! Sono l'AI co-pilot del progetto. Conosco l'intero audit tecnico, l'architettura informativa internazionale, l'analisi dei competitor e la sitemap proposta. Chiedimi pure qualsiasi cosa o seleziona un argomento qui sotto!
+        </div>
+    </div>
+
+    <div class="ai-suggestions">
+        <div class="suggestion-btn" onclick="sendSuggestion('Quali sono le criticità dell\'Age Gate?')">Criticità Age Gate</div>
+        <div class="suggestion-btn" onclick="sendSuggestion('Cosa possiamo copiare da Jägermeister?')">Benchmark Jägermeister</div>
+        <div class="suggestion-btn" onclick="sendSuggestion('Quali sono i quick wins per i primi 90 giorni?')">Quick Wins 90d</div>
+        <div class="suggestion-btn" onclick="sendSuggestion('Come impostiamo la sitemap internazionale?')">Sitemap Internazionale</div>
+    </div>
+
+    <div class="ai-input-area">
+        <input type="text" id="userInput" placeholder="Fai una domanda sul progetto SEO..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()">Invia</button>
+    </div>
+</div>
+
+<script>
+    // Conoscenza strutturata estratta direttamente dal documento
+    const projectKnowledge = {
+        "age gate": "L'attuale age gate del sito di Vecchio Amaro del Capo reindirizza gli accessi diretti verso le pagine locali (/autorizzazione/, ecc.) con parametri come return_to=home. Anche se Google indicizza parzialmente i contenuti via snippet, questo sistema introduce complessità inutile per il crawling, rischi di canonicalizzazione e barriere d'ingresso per la UX. Va verificato con l'analisi dei log file e Search Console.",
+        "critic": "Le criticità principali emerse dall'audit sono:\n1. Age Gate asimmetrico che complica il crawling.\n2. Incoerenza dell'architettura informativa fra i vari mercati (IT, DE, ES, EN hanno menu e portafogli prodotti disallineati).\n3. Localizzazione non nativa (es. stringhe miste come 'Geheimnisse del Capo' in tedesco o scampoli di inglese in Spagna).\n4. Copertura semantica troppo stretta (poche pagine categoria o educational).",
+        "jägermeister": "Da Jägermeister dobbiamo riprendere la logica 'Community + Education + Culture'. Il loro fiore all'occhiello è l'Hubertus Circle, una piattaforma digitale e reale che unisce e forma i bartender globali, generando link earning spontaneo, contenuti ricchi e autorevolezza semantica imbattibile nel settore spirits.",
+        "montenegro": "Amaro Montenegro lavora egregiamente sulla coerenza internazionale (il sito supporta uniformemente IT, EN, ES, FR, DE, ZH) e sulla 'cocktail credibility', integrando ricette firmate da famosi mixologist e la call to action per la community 'The Vero Bartender'.",
+        "ramazzotti": "Ramazzotti è il benchmark di riferimento in Germania. Presidia un ventaglio di ricette e varianti di consumo enormemente superiore a Vecchio Amaro del Capo (inclusi serve caldi/freddi stagionali, limoncello, espresso e prodotti 0.0%) e capitalizza sul brand experience con Casa Ramazzotti.",
+        "quick win": "I 5 quick wins fondamentali per i primi 90 giorni sono:\n1. Uniformare i menu di navigazione principale tra IT, DE, ES e EN.\n2. Correggere i refusi e le stringhe di localizzazione non native.\n3. Creare la pagina pillar 'Cos'è l'Amaro Italiano' in tutte le lingue.\n4. Progettare l'hub interattivo 'Come si beve / Servizio a -20°C'.\n5. Implementare i dati strutturati (Product, Recipe, Breadcrumb) per massimizzare i Rich Snippet.",
+        "sitemap": "La sitemap proposta segue una logica Hub-and-Spoke. Le sezioni chiave includono:\n- Corporate/Brand (/brand/calabria, /brand/perche-a-20)\n- Prodotti (/products/riserva-del-centenario, /products/red-hot-edition)\n- Cocktail divisi per occasioni, stile e stagione (/cocktails/by-occasion/aperitivo)\n- Journal Educational (/journal/what-is-amaro, /journal/amaro-vs-vermouth)\n- Commerciale (/where-to-buy/germany).",
+        "germania": "In Germania il potenziale SEO ruota attorno a parole chiave come Kräuterlikör, Digestif, Aperitif e Rezepte. Vecchio Amaro del Capo deve posizionarsi come l'alternativa premium italiana dall'inconfondibile rito ghiacciato, contrastando lo strapotere di Ramazzotti sulle ricette e Jägermeister sul trade.",
+        "spagna": "In Spagna l'intent transazionale e informazionale si muove verso l'universo 'Aperitivo / Cócteles / Spritz'. Non bisogna vendere l'amaro solo come digestivo post-serata, bensì come ingrediente rinfrescante e conviviale per i twist sui cocktail classici.",
+        "inglese": "Nel mercato internazionale (EN) la sfida è puramente educativa. Oggi il sito usa il termine troppo generico 'Italian liquor'; la keyword map evidenzia la necessità di intercettare query come 'Italian amaro', 'Italian herbal liqueur' e guide comparative ('amaro vs vermouth').",
+        "roadmap": "La roadmap annuale è strutturata in 4 macro-fasi:\n- Q1 (Fondamenta): Audit tecnico completo, IA design globale e piano hreflang.\n- Q2 (Lancio): Migrazione al nuovo sito, inserimento markup e ottimizzazione Core Web Vitals.\n- Q3 (Espansione): Lancio degli hub cocktail avanzati e delle pagine territoriali della Calabria.\n- Q4 (Consolidamento): Focus su stagionalità invernale, guide ai regali (Gifting) e visibilità sui motori generativi (AI/LLM)."
+    };
+
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    function sendSuggestion(text) {
+        document.getElementById('userInput').value = text;
+        sendMessage();
+    }
+
+    function sendMessage() {
+        const inputEl = document.getElementById('userInput');
+        const query = inputEl.value.trim();
+        if (!query) return;
+
+        // Aggiungi messaggio utente in chat
+        appendMessage(query, 'user');
+        inputEl.value = '';
+
+        // Simula elaborazione AI
+        setTimeout(() => {
+            const reply = generateReply(query);
+            appendMessage(reply, 'system');
+        }, 400);
+    }
+
+    function appendMessage(text, sender) {
+        const chatContainer = document.getElementById('chatMessages');
+        const msgEl = document.createElement('div');
+        msgEl.className = `message ${sender}`;
+        msgEl.innerText = text;
+        chatContainer.appendChild(msgEl);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function generateReply(query) {
+        const lowerQuery = query.toLowerCase();
+        let matchedKey = null;
+
+        // Semplice motore di ricerca a parole chiave sulla conoscenza del progetto
+        for (let key in projectKnowledge) {
+            if (lowerQuery.includes(key)) {
+                matchedKey = key;
+                break;
+            }
+        }
+
+        if (matchedKey) {
+            return projectKnowledge[matchedKey];
+        } else {
+            return "Interessante questa domanda! Nel report analizziamo approfonditamente come strutturare i cluster per i motori di ricerca tradizionali e i sistemi generativi (LLM). Prova a chiedermi nello specifico dei Competitor (Jägermeister, Ramazzotti, Montenegro), dei Quick Wins, della Sitemap o delle strategie per Germania, Spagna e Inglese.";
+        }
+    }
+</script>
+
+</body>
+</html>
